@@ -2,25 +2,23 @@
 
 function displayResults(responseJson) {
     console.log(responseJson);
-    $('.results-list').empty();
-    for (let i = 0; i < responseJson.value.length; i++){
-      $('.results-list').append(
-        `<li><h3><a href="${responseJson.value[i].url}">${responseJson.value[i].name}</a></h3>
-        </li>`
+    for (let i = 0; i < responseJson.length; i++){
+      $('.results').append(
+        `<p><a href="${responseJson[i].html_url}">${responseJson[i].name}</a></p>`
       )}; 
     $('.results').removeClass('hidden');
   };
 
 function getSearchUser(searchUser) {
-    fetch(`https://api.github.com/users/${username}/repos`)
+    fetch(`https://api.github.com/users/${searchUser}/repos`)
         .then(response => response.json())
         .then(responseJson => displayResults(responseJson))
-        .catch(error => alert('Something went wrong. Try again later.'));
+        .catch(error => alert(error));
 };
 
 const options = {
     headers: new Headers({
-        Accept: application/vnd.github.v3+json
+        'Accept': 'application/vnd.github.v3+json'
     })
 };
 
@@ -33,4 +31,4 @@ function watchForm() {
     });
 }
 
-$watchForm();
+$(watchForm);
